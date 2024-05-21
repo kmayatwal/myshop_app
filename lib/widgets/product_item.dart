@@ -3,19 +3,22 @@ import 'package:provider/provider.dart';
 
 import '../screens/product_detail_screen.dart';
 import '../providers/products.dart';
+import '../providers/product.dart';
 
 class ProductItem extends StatelessWidget {
-  final String id;
-  final String title;
-  final String imageUrl;
-  final bool isFavorite;
+  // final String id;
+  // final String title;
+  // final String imageUrl;
+  // final bool isFavorite;
 
-  ProductItem(this.id, this.title, this.imageUrl, this.isFavorite);
+  // ProductItem(this.id, this.title, this.imageUrl, this.isFavorite);
 
   @override
   Widget build(BuildContext context) {
     // final productsData = Provider.of<Products>(context, listen: false);
     // Provider.of<Products>(context).addFavorite()
+
+    final product = Provider.of<Product>(context);
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
@@ -37,11 +40,11 @@ class ProductItem extends StatelessWidget {
 
               Navigator.of(context).pushNamed(
                 ProductDetailScreen.routeName,
-                arguments: id,
+                arguments: product.id,
               );
             },
             child: Image.network(
-              imageUrl,
+              product.imageUrl,
               fit: BoxFit.cover,
             ),
           ),
@@ -50,13 +53,17 @@ class ProductItem extends StatelessWidget {
           backgroundColor: Colors.black87,
           leading: IconButton(
             icon: Icon(
-                isFavorite ? Icons.favorite : Icons.favorite_border_outlined),
+              product.isFavorite
+                  ? Icons.favorite
+                  : Icons.favorite_border_outlined,
+            ),
             onPressed: () {
-              Provider.of<Products>(context, listen: false).addFavorite(id, isFavorite);
+              product.toggleFavoriteStatus();
+              // Provider.of<Products>(context, listen: false).addFavorite(id, product.isFavorite);
             },
           ),
           title: Text(
-            title,
+            product.title,
             textAlign: TextAlign.center,
           ),
           trailing: IconButton(
