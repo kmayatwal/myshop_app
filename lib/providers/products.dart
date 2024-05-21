@@ -46,4 +46,13 @@ class Products with ChangeNotifier {
     // _item.add(value);
     notifyListeners();
   }
+
+  Product findById(id) {
+    return _item.firstWhere((element) => element.id == id);
+  }
+
+  void addFavorite(id, value) {
+    _item.firstWhere((element) => element.id == id).isFavorite = !value;
+    notifyListeners();
+  }
 }
