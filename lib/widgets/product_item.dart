@@ -18,41 +18,41 @@ class ProductItem extends StatelessWidget {
     // final productsData = Provider.of<Products>(context, listen: false);
     // Provider.of<Products>(context).addFavorite()
 
-    // final product = Provider.of<Product>(context);
+    final product = Provider.of<Product>(context, listen: false);
 
-    return Consumer<Product>(
-      builder: (ctx, product, child) => ClipRRect(
-        borderRadius: BorderRadius.circular(10),
-        child: GridTile(
-          child: Container(
-            // decoration: BoxDecoration(
-            //   color: Colors.lime,
-            //   border: Border.all(width: 1, color: Colors.black87),
-            //   borderRadius: BorderRadius.circular(10),
-            // ),
-            child: GestureDetector(
-              onTap: () {
-                // On The Fly Route
-                // Navigator.of(context).push(
-                //   MaterialPageRoute(
-                //     builder: (ctx) => ProductDetailScreen(title),
-                //   ),
-                // );
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(10),
+      child: GridTile(
+        child: Container(
+          // decoration: BoxDecoration(
+          //   color: Colors.lime,
+          //   border: Border.all(width: 1, color: Colors.black87),
+          //   borderRadius: BorderRadius.circular(10),
+          // ),
+          child: GestureDetector(
+            onTap: () {
+              // On The Fly Route
+              // Navigator.of(context).push(
+              //   MaterialPageRoute(
+              //     builder: (ctx) => ProductDetailScreen(title),
+              //   ),
+              // );
 
-                Navigator.of(context).pushNamed(
-                  ProductDetailScreen.routeName,
-                  arguments: product.id,
-                );
-              },
-              child: Image.network(
-                product.imageUrl,
-                fit: BoxFit.cover,
-              ),
+              Navigator.of(context).pushNamed(
+                ProductDetailScreen.routeName,
+                arguments: product.id,
+              );
+            },
+            child: Image.network(
+              product.imageUrl,
+              fit: BoxFit.cover,
             ),
           ),
-          footer: GridTileBar(
-            backgroundColor: Colors.black87,
-            leading: IconButton(
+        ),
+        footer: GridTileBar(
+          backgroundColor: Colors.black87,
+          leading: Consumer<Product>(
+            builder: (ctx, product, child) => IconButton(
               icon: Icon(
                 product.isFavorite
                     ? Icons.favorite
@@ -63,14 +63,14 @@ class ProductItem extends StatelessWidget {
                 // Provider.of<Products>(context, listen: false).addFavorite(id, product.isFavorite);
               },
             ),
-            title: Text(
-              product.title,
-              textAlign: TextAlign.center,
-            ),
-            trailing: IconButton(
-              icon: Icon(Icons.shopping_cart),
-              onPressed: () {},
-            ),
+          ),
+          title: Text(
+            product.title,
+            textAlign: TextAlign.center,
+          ),
+          trailing: IconButton(
+            icon: Icon(Icons.shopping_cart),
+            onPressed: () {},
           ),
         ),
       ),
