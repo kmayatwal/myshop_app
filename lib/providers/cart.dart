@@ -30,7 +30,7 @@ class Cart with ChangeNotifier {
     _items.forEach((key, cartItem) {
       total += cartItem.price * cartItem.quantity;
     });
-    return total;
+    return total.toDouble();
   }
 
   addItem(
@@ -59,6 +59,11 @@ class Cart with ChangeNotifier {
         ),
       );
     }
+    notifyListeners();
+  }
+
+  removeItem(productId) {
+    _items.remove(productId);
     notifyListeners();
   }
 }
